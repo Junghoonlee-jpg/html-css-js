@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  color: inherit
+  color: inherit;
   text-decoration: none;
 }
 .login-box {
@@ -10,6 +10,8 @@
   border-radius: 10px;
   margin: 10px;
   padding: 30px;
+  max-width: 320px;
+  margin: 0 auto;
 }
 .login-box > div {
   /* 자식요소에게 적용할 수 잇는 정렬 규칙 */
@@ -62,4 +64,8 @@
 #sign_up:active {
   opacity: 0.5;
   transform: scale(0.98);
+}
+
+.login-model {
+  display: none;
 }
