@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>회원가입</h1>
+    <form>
+      <label for="b">생년월일</label>
+      <input type="text" placeholder="예) YYYY/MM/DD" id="b" />
+
+      <label for="i">아이디</label>
+      <input type="text" placeholder="아이디를 입력하세요" id="i" />
+
+      <label for="p">비밀번호</label>
+      <input type="text" placeholder="비밀번호를 입력하세요" id="p" />
+
+      <label for="c">비밀번호 확인</label>
+      <input type="text" placeholder="비밀번호를 동일하게 입력하세요" id="c" />
+      <div>
+        <input type="submit" value="회원가입" />
+        <input type="button" value="취소" />
+        <input type="reset" value="초기화" />
+      </div>
+    </form>
+    <script src="index.js"></script>
+  </body>
+</html>
