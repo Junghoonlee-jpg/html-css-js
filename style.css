@@ -5,34 +5,58 @@
   list-style-type: none;
 }
 
+@keyframes roll {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1800deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+h1 {
+  text-align: center;
+  padding: 20px 0;
+}
+
 #root {
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
+  /* border: 1px solid; */
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
-}
-
-button {
-  cursor: pointer;
-  padding: 10px 20px;
-  padding: none;
-  border-radius: 4px;
-}
-
-button:hover {
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-}
-
-img {
-  width: 60px;
-  height: 60px;
-  border: 1px solid;
-}
-
-.con {
-  display: flex;
-  column-gap: 10px;
+  row-gap: 10px;
   align-items: center;
+}
+
+#root div {
+  display: flex;
+  column-gap: 20px;
+}
+
+#root img {
+  /* border: 1px solid; */
+  width: 40px;
+  height: 40px;
+  animation: roll 3s ease;
+}
+
+#root button {
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.score {
+  border: 1px solid;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
 }

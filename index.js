@@ -1,65 +1,110 @@
-const imgs = [
-  "https://cdn-icons-png.flaticon.com/128/9534/9534501.png",
-  "https://cdn-icons-png.flaticon.com/128/3562/3562093.png",
-  "https://cdn-icons-png.flaticon.com/128/12355/12355903.png",
+let dice = [
+  "https://cdn-icons-png.flaticon.com/128/10826/10826863.png",
+  "https://cdn-icons-png.flaticon.com/128/10826/10826864.png",
+  "https://cdn-icons-png.flaticon.com/128/10826/10826865.png",
+  "https://cdn-icons-png.flaticon.com/128/10826/10826866.png",
+  "https://cdn-icons-png.flaticon.com/128/1626/1626822.png",
+  "https://cdn-icons-png.flaticon.com/128/10826/10826868.png",
 ];
-const messages = ["안내면 진다", "가위", "바위", "보"];
-const generateRandomNumber = () => Math.floor(Math.random() * 3);
-let imgIndex1 = generateRandomNumber();
-let imgIndex2 = generateRandomNumber();
-console.log(imgIndex1, imgIndex2);
-let time = 0;
-let index = 0;
-const root = document.querySelector("#root");
-const con = document.querySelector(".con");
-const h1 = document.querySelector("h1");
+
+const divs = document.querySelectorAll("#root > div");
+
+let myDices = Array.from({ length: 4 }, (_, index) => {
+  const img = document.createElement("img");
+
+  img.alt = `${index + 1}번째 주사위`;
+
+  return img;
+});
+
+let comDices = Array.from({ length: 4 }, (_, index) => {
+  const img = document.createElement("img");
+
+  img.alt = `${index + 1}번째 주사위`;
+
+  return img;
+});
+
+console.log(comDices);
+
+const makeNumber = () => Math.floor(Math.random() * 6);
+
+divs.forEach((div, index) => {
+  div.innerHTML = null;
+
+  if (index === 0) {
+    myDices.forEach((img) => {
+      img.src = dice[makeNumber()];
+
+      div.append(img);
+    });
+  } else {
+    comDices.forEach((img) => {
+      img.src = dice[makeNumber()];
+
+      div.append(img);
+    });
+  }
+});
+
 const button = document.querySelector("button");
-const images = document.querySelectorAll("img");
-images.forEach((image, index) => (image.src = imgs[index]));
-// 0 가위
-// 1 바위
-// 2  보
-const whoWins = (v1, v2) => {
-  if (v1 === v2) {
-    return "비김";
-  }
-  if (v1 === 0 && v2 === 1) {
-    return "짐";
-  }
-  if (v1 === 1 && v2 === 2) {
-    return "짐";
-  }
-  if (v1 === 2 && v2 === 0) {
-    return "짐";
-  }
-  return "이김";
+
+const whoWins = (d1, d2) => {
+  let sum1 = 0;
+  let sum2 = 0;
+
+  d1.forEach((img) => {
+    const index = dice.findIndex((src) => src === img.src);
+    if (index >= 0) {
+      sum1 += index + 1;
+    }
+  });
+  d2.forEach((img) => {
+    const index = dice.findIndex((src) => src === img.src);
+    if (index >= 0) {
+      sum2 += index + 1;
+    }
+  });
+
+  button.innerText = "한 판 더!";
+  const body = document.querySelector("body");
+  const div = document.createElement("div");
+  div.className = "score";
+
+  const p1 = document.createElement("p");
+  const p2 = document.createElement("p");
+
+  p1.innerText = `${sum1} : ${sum2}`;
+  p2.innerText = sum1 === sum2 ? "Tie" : `You ${sum1 > sum2 ? "Win" : "Lose"}`;
+  div.append(p1, p2);
+
+  body.append(div);
 };
+
 button.onclick = () => {
-  const titleId = setInterval(() => {
-    h1.innerText = messages[index];
-    index += 1;
-    if (index === 4) {
-      clearInterval(titleId);
+  let time = 0;
+  const id = setInterval(() => {
+    if (time === 3) {
+      return;
     }
-  }, 1000);
-  const imgId = setInterval(() => {
-    imgIndex1 = generateRandomNumber();
-    imgIndex2 = generateRandomNumber();
-    images[0].src = imgs[imgIndex1];
-    images[2].src = imgs[imgIndex2];
-    if (index === 4) {
-      clearInterval(imgId);
-      h1.innerText = whoWins(imgIndex1, imgIndex2);
-      button.innerText = "한 판 더!";
-      index = 0;
-      imgIndex1 = generateRandomNumber();
-      imgIndex2 = generateRandomNumber();
-      clearInterval(titleId);
-      clearInterval(imgId);
-    }
-  }, 100);
-  con.innerHTML = null;
-  const h2 = document.createElement("h2");
-  h2.innerText = "VS";
-  con.append(images[0], h2, images[2]);
+    myDices.forEach((img) => {
+      img.src = dice[makeNumber()];
+      img.animate([
+        { transfrom: "rotate(0deg)" },
+        { transfrom: "rotate(900deg" },
+      ]);
+    }, 100);
+
+    const countId = setInterval(() => {
+      if (time === 3) {
+        clearInterval(countId);
+        clearInterval(id);
+        time = 0;
+        whoWins(myDices, comDices);
+
+        return;
+      }
+      time += 1;
+    }, 1000);
+  });
 };
